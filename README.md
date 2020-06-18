@@ -23,3 +23,13 @@ net.enqueue({
     Log.i("DONE", "Net Complete ${it.bodyAsString}")
 })
 ```
+
+```kotlin
+// GET with Lambda
+// -----
+fun getUsers(onDone: (userData: String?) -> Unit) {
+    Network.get("https://sample-api-jkl.herokuapp.com/users").enqueue({
+        onDone(it.bodyAsString)
+    })
+}
+```
