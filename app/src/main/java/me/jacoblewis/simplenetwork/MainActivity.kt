@@ -12,11 +12,11 @@ import android.provider.OpenableColumns
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.example.network.Network
-import com.example.network.body.FormDataBody
-import com.example.network.models.FormItem
 import com.example.simplenetwork.R
 import kotlinx.android.synthetic.main.activity_main.*
+import me.jacoblewis.network.Rest
+import me.jacoblewis.network.body.FormDataBody
+import me.jacoblewis.network.models.FormItem
 import java.io.*
 import java.net.URISyntaxException
 
@@ -27,7 +27,7 @@ import java.net.URISyntaxException
  * Not part of the library
  */
 class MainActivity : AppCompatActivity() {
-    val net = Network.post(
+    val net = Rest.post(
         "https://sample-api-jkl.herokuapp.com/users", FormDataBody(
             mapOf(
                 "age" to FormItem.Text("23"),
@@ -49,13 +49,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun getName() {
-
         net.enqueue({
-//            val bitmap = BitmapFactory.decodeByteArray(it.body, 0, it.body?.size ?: 0)
-//            imageView.setImageBitmap(bitmap)
-//            imageView.scaleType = ImageView.ScaleType.CENTER_CROP
             text1.text = it.bodyAsString
-            getName()
             Log.i("DONE", "Net Complete")
         }, {
             Log.i("PROGRESS", "PROGRESS: $it")
@@ -63,7 +58,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun uploadImage(file: File) {
-        val net = Network.put(
+        val net = Rest.put(
             "https://sample-api-jkl.herokuapp.com/dogs", body = FormDataBody(
                 mapOf(
                     "photo" to FormItem.File(file, "image/jpeg"),
@@ -74,6 +69,7 @@ class MainActivity : AppCompatActivity() {
         net.enqueue({
             val bitmap = BitmapFactory.decodeByteArray(it.body, 0, it.body?.size ?: 0)
             imageView.setImageBitmap(bitmap)
+            Log.i("DONE", "Net Complete")
         }, {
             Log.i("PROGRESS", "PROGRESS: $it")
         })

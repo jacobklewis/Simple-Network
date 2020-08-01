@@ -1,3 +1,20 @@
+/*
+ * Copyright (C) 2020 Jacob Lewis
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ */
+
 package me.jacoblewis.network
 
 import androidx.annotation.Keep
@@ -9,7 +26,7 @@ import me.jacoblewis.network.utils.TaskRunner
 
 
 @Keep
-class Network
+class Rest
 private constructor(private val request: Request) {
     var taskRunner: TaskRunner? = null
 
@@ -48,9 +65,9 @@ private constructor(private val request: Request) {
             url: String,
             headers: Map<String, String> = mapOf(),
             timeout: Int = 30_000
-        ): Network {
+        ): Rest {
             val request = Request(url, HttpMethod.GET, headers, null, readTimeout = timeout)
-            return Network(request)
+            return Rest(request)
         }
 
         @JvmStatic
@@ -60,9 +77,9 @@ private constructor(private val request: Request) {
             body: Body? = null,
             headers: Map<String, String> = mapOf(),
             timeout: Int = 30_000
-        ): Network {
+        ): Rest {
             val request = Request(url, HttpMethod.POST, headers, body)
-            return Network(request)
+            return Rest(request)
         }
 
         @JvmStatic
@@ -72,9 +89,9 @@ private constructor(private val request: Request) {
             body: Body? = null,
             headers: Map<String, String> = mapOf(),
             timeout: Int = 30_000
-        ): Network {
+        ): Rest {
             val request = Request(url, HttpMethod.PUT, headers, body)
-            return Network(request)
+            return Rest(request)
         }
 
         @JvmStatic
@@ -84,9 +101,9 @@ private constructor(private val request: Request) {
             body: Body? = null,
             headers: Map<String, String> = mapOf(),
             timeout: Int = 30_000
-        ): Network {
+        ): Rest {
             val request = Request(url, HttpMethod.PATCH, headers, body)
-            return Network(request)
+            return Rest(request)
         }
 
         @JvmStatic
@@ -96,9 +113,9 @@ private constructor(private val request: Request) {
             body: Body? = null,
             headers: Map<String, String> = mapOf(),
             timeout: Int = 30_000
-        ): Network {
+        ): Rest {
             val request = Request(url, HttpMethod.DELETE, headers, body)
-            return Network(request)
+            return Rest(request)
         }
 
         @JvmStatic
@@ -109,8 +126,8 @@ private constructor(private val request: Request) {
             body: Body?,
             readTimeout: Int = 30_000,
             connectTimeout: Int = 15_000
-        ): Network {
-            return Network(Request(url, method, headers, body, readTimeout, connectTimeout))
+        ): Rest {
+            return Rest(Request(url, method, headers, body, readTimeout, connectTimeout))
         }
     }
 
